@@ -60,7 +60,7 @@ def main():
         save_strategy="epoch",
         load_best_model_at_end=True,
         report_to="none",
-        max_seq_length=MAX_LENGTH,
+        max_length=MAX_LENGTH,
         dataset_text_field="text",    # column name in our dataset
     )
 
@@ -70,7 +70,7 @@ def main():
         args=training_args,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
     )
 
     print("Starting SFT training ...")

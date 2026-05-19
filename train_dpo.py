@@ -96,7 +96,7 @@ def run_dpo(seed: int = 42, output_dir: str = None) -> dict:
         args=dpo_config,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
     )
 
     print("Starting DPO training ...")
@@ -123,11 +123,16 @@ def run_dpo(seed: int = 42, output_dir: str = None) -> dict:
         pad_token_id=tokenizer.eos_token_id,
     )
 
+    # Force model to CPU for generation (DPOTrainer may have moved it to MPS)
+    eval_device = "cpu"
+    model = model.to(eval_device)
+    rm_model = rm_model.to(eval_device)
+
     model.eval()
     rewards_after = []
     with torch.no_grad():
         for prompt in EVAL_PROMPTS[:5]:
-            ids = tokenizer(prompt, return_tensors="pt").input_ids.to(device)
+            ids = tokenizer(prompt, return_tensors="pt").input_ids.to(eval_device)
             out = model.generate(ids, **generation_kwargs)
             response = tokenizer.decode(out[0][ids.shape[1]:], skip_special_tokens=True)
 
@@ -136,7 +141,7 @@ def run_dpo(seed: int = 42, output_dir: str = None) -> dict:
                 return_tensors="pt",
                 truncation=True,
                 max_length=256,
-            ).to(device)
+            ).to(eval_device)
             logits = rm_model(**rm_inputs).logits
             r = (logits[0, 1] - logits[0, 0]).item()
             rewards_after.append(r)

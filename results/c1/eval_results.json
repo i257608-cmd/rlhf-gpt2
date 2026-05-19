@@ -1,0 +1,82 @@
+{
+  "prompts": [
+    {
+      "prompt": "This movie was",
+      "sft_response": " a complete disaster. Even in the small theaters. The movie is a total crap. The story is terrible. The action is dull. The script is awful. The actors are all dumb. The plot twists and plot points are a total waste of time. The movies themselves are nothing to be excited about but when they are",
+      "sft_reward": -5.635292053222656,
+      "ppo_response": " a fantastic one, and it was also my favourite movie ever! My brother, he is a big fan of this movie, and was very impressed with the character of John. It's really a great thriller, and one of the best in the industry! A beautiful and beautiful movie with some beautiful visuals and a good story",
+      "ppo_reward": 5.888060092926025
+    },
+    {
+      "prompt": "The film was",
+      "sft_response": " released on DVD on June 8, 1994. It is a classic from the point of view of the two main characters in this very film: they are trying to avoid getting killed. The movie is mainly about the family of the people who were killed when a tornado ripped through town and sent a group of kids off to the",
+      "sft_reward": 2.151360034942627,
+      "ppo_response": " a really fun experience, and we will be seeing it again this year as we are going into the year in the most spectacular fashion. The film is beautiful and it is the best part. It is also the best musical comedy ever, it is so funny and funny and amazing. The performance of Olivier Boudreaux",
+      "ppo_reward": 5.674181938171387
+    },
+    {
+      "prompt": "I thought this movie",
+      "sft_response": " was a big hit for me, but I thought it was just too much to handle on my own. I thought there were a lot of characters with big names, but I was disappointed by the lack of characterization.<br /><br />There's plenty of humor in the movie, even when it's quite the reverse",
+      "sft_reward": -0.800443172454834,
+      "ppo_response": " would be a great movie and I really enjoyed it. The director was so talented. He came up with a good story about an evil man who takes control of a corrupt police force. The cinematography was a real gem and it really captured my heart. The action and comedy are very good. The film is very good",
+      "ppo_reward": 4.007323741912842
+    },
+    {
+      "prompt": "The acting in this film",
+      "sft_response": " is top notch, and it makes the movie feel real. Not a bad performance, but I have to admit, this movie is pretty bad in terms of acting overall. I thought I knew some of the songs, but I didn't really enjoy them and felt a sense of betrayal when they came out. I didn't",
+      "sft_reward": -1.3869191408157349,
+      "ppo_response": " is a tremendous success, with wonderful performances by the cast including Tom Hardy, Michelle Park, Tom Ford, and James Dean. The performance by Oscar Award winning Robert Downey is one of the most memorable in recent years, and this film is one of my favorite films of the series. The acting is also one of the",
+      "ppo_reward": 4.019682884216309
+    },
+    {
+      "prompt": "The plot of the movie",
+      "sft_response": " is a romantic comedy starring James McAvoy and a couple of his wife Laura (Gail Dyer) and daughter Victoria (Joel David). The film has a lot of fun but its not the most engaging and entertaining of the three films. One thing that made the film memorable was that in the opening scene I",
+      "sft_reward": 1.9020832777023315,
+      "ppo_response": " is one of the best films I have ever seen. The acting is excellent and the music is lovely as well. The characters are very interesting, as well as the humor which gives a real sense of realism to the world of their interactions. It is such a wonderful movie. It has a lot of beautiful scenes, which",
+      "ppo_reward": 6.1101837158203125
+    },
+    {
+      "prompt": "Overall, the film",
+      "sft_response": " is good and you must watch it at least once to truly enjoy it. The characters and the acting are well done, the dialogue and the atmosphere are just so clean and clean.",
+      "sft_reward": 3.3321595191955566,
+      "ppo_response": " is a delight. The performance is wonderful, the character and director are very intelligent and interesting, the story and characters is true to its essence. The acting is amazing, it is one of the best movies I have ever seen. The movie is also one of the best movies of the year. I will definitely be recommending",
+      "ppo_reward": 5.102006435394287
+    },
+    {
+      "prompt": "The director did",
+      "sft_response": " it beautifully, which is something that I loved about this film. All of this was done by talented actors (including the talented Peter Bogdanovich) who really did this film in such a short period of time. I love the story and the characters (Bogo, who goes to visit me in France in the middle",
+      "sft_reward": 2.9022746086120605,
+      "ppo_response": " a fantastic job in capturing that intensity of the character, and this film is a must see for everyone. The atmosphere of the film is fantastic, and the atmosphere in The Great Escape is one of the greatest of all time. The story is a unique story, and the action is so powerful and interesting. It's also",
+      "ppo_reward": 4.278906345367432
+    },
+    {
+      "prompt": "The story was",
+      "sft_response": " filmed in Vancouver, and there was not even any way to tell what was going on. A script was put together and all the footage was filmed with a bunch of locals. This movie could have been seen anywhere. I can't think of a better way to film it than with a cast. I'm extremely grateful for",
+      "sft_reward": 1.0902202129364014,
+      "ppo_response": " fantastic! We have so much to say about this movie. We've seen so much of its material and that was awesome. We loved its characters and were surprised by its story. One of the greatest films we've seen in our lives! We love this movie as well and have a great appreciation for how it is set",
+      "ppo_reward": 5.622391700744629
+    },
+    {
+      "prompt": "The cinematography was",
+      "sft_response": " fantastic, the actors, the backgrounds, the costumes, the lighting, the backgrounds of the films. It's amazing when you see a film with such a well choreographed, well thought-out and detailed performance. It's also amazing when you see a director that has the best of intentions and in the world of a",
+      "sft_reward": 4.325786590576172,
+      "ppo_response": " superb and the cinematography was great as well. It's all about making a memorable movie.<br /><br />A truly unique piece of cinema. All this time was there, it's amazing. A great piece of cinema that's both unique and unique. That's why you will find this movie on the internet",
+      "ppo_reward": 5.723845958709717
+    },
+    {
+      "prompt": "This was one of the",
+      "sft_response": " very best reviews I have seen for the movie. Although the plot revolves around the death of the character of a young girl, the acting is fine for a young movie.<br /><br />The acting here is excellent and it was very good. There were several characters that were quite amusing to watch while I was there",
+      "sft_reward": 3.365654230117798,
+      "ppo_response": " best movies that we had ever seen, a beautiful picture that showed the real value of a movie. It's an amazing movie, and this movie has a very good story and an amazing story all around. It's a masterpiece of cinema, and we all love it. I am so glad we enjoyed this movie. It",
+      "ppo_reward": 4.571874618530273
+    }
+  ],
+  "aggregate": {
+    "sft_mean_reward": 1.124688410758972,
+    "ppo_mean_reward": 5.099845743179321,
+    "reward_delta": 3.975157332420349,
+    "sft_perplexity": 38.43842297295074,
+    "ppo_perplexity": 45.45418147357136,
+    "alignment_tax_pct": 18.251941567836006
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "method_alignment_tax": {
+    "SFT": {
+      "mean_reward": 2.497742569446564,
+      "perplexity": 37.79248754187523,
+      "tax_pct": 0.0,
+      "reward_gain": 0.0
+    },
+    "PPO": {
+      "mean_reward": 4.9420485496521,
+      "perplexity": 44.68965052275894,
+      "tax_pct": 18.25,
+      "reward_gain": 2.4443,
+      "efficiency_reward_per_ppl_pct": 0.1339
+    },
+    "DPO": {
+      "mean_reward": 4.816087937355041,
+      "perplexity": 54.39416647186175,
+      "tax_pct": 43.929,
+      "reward_gain": 2.3183,
+      "efficiency_reward_per_ppl_pct": 0.0528
+    }
+  },
+  "optimal_stopping": {
+    "recommended_beta": 0.2,
+    "optimal_mean_kl": 9.576,
+    "optimal_mean_reward": 5.2858,
+    "collapse_onset_kl": 17.687,
+    "safety_margin_kl": 8.111
+  },
+  "sweep_summary": [
+    {
+      "beta": 0.05,
+      "mean_reward": 9.4493,
+      "std_reward": 1.2647,
+      "mean_kl": 40.7511,
+      "max_kl": 67.2059,
+      "collapse_rate": 1.0,
+      "reward_gain": 6.9515,
+      "kl_per_reward": 5.8622
+    },
+    {
+      "beta": 0.1,
+      "mean_reward": 6.0086,
+      "std_reward": 0.428,
+      "mean_kl": 17.687,
+      "max_kl": 24.2873,
+      "collapse_rate": 1.0,
+      "reward_gain": 3.5108,
+      "kl_per_reward": 5.0379
+    },
+    {
+      "beta": 0.2,
+      "mean_reward": 5.2858,
+      "std_reward": 0.4715,
+      "mean_kl": 9.5763,
+      "max_kl": 14.6212,
+      "collapse_rate": 0.0,
+      "reward_gain": 2.7881,
+      "kl_per_reward": 3.4347
+    },
+    {
+      "beta": 0.5,
+      "mean_reward": 4.208,
+      "std_reward": 0.2867,
+      "mean_kl": 4.5203,
+      "max_kl": 8.113,
+      "collapse_rate": 0.0,
+      "reward_gain": 1.7103,
+      "kl_per_reward": 2.643
+    }
+  ],
+  "recommendation": "Use \u03b2=0.20 (KL penalty). This achieves mean reward 5.286 with mean KL 9.58, a safety margin of 8.11 KL units below the collapse threshold (17.69). PPO at \u03b2=0.20 is more efficient than DPO (0.134 vs 0.053 reward per ppl%). Stop training if KL exceeds 17.7 (collapse onset)."
+}

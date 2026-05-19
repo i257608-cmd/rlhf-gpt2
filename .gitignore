@@ -216,3 +216,22 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Model checkpoints (too large for GitHub)
+checkpoints/
+
+# Large model files
+*.bin
+*.safetensors
+*.pt
+*.pth
+
+# macOS
+.DS_Store
+
+# Training logs
+*.log
+ppo_training.log
+ppo_seed*.log
+dpo_eval.log
+sweep.log

@@ -1,7 +1,213 @@
-# rlhf-gpt2
+# RLHF on GPT-2: PPO vs DPO with KL-Penalty Stability Analysis
 
-RLHF fine-tuning of GPT-2 with PPO and DPO using HuggingFace TRL.
-Three contributions: reproducible pipeline, PPO vs DPO comparison, stability & alignment-tax sweep.
+**Masters in AI — Reinforcement Learning Project**  
+**Model**: GPT-2 (124M) · **Dataset**: IMDB · **Framework**: HuggingFace TRL 0.24.0
+
+A complete, reproducible RLHF pipeline with three empirical contributions:
+
+| Contribution | Description | Key Result |
+|---|---|---|
+| **C1** | PPO-RLHF pipeline | +3.98 reward, +18.3% perplexity alignment tax |
+| **C2** | PPO vs DPO comparison | PPO is 2.5× more reward-efficient than DPO |
+| **C3** | KL-penalty stability sweep (12 runs) | β ≤ 0.10 causes reward hacking; β = 0.20 is optimal |
+
+---
+
+## Repository Structure
+
+```
+rlhf-gpt2/
+├── config.py                  # Shared hyperparameters and paths
+├── data_utils.py              # Tokenizer and dataset helpers
+│
+├── train_sft.py               # Stage 1: Supervised Fine-Tuning
+├── train_reward_model.py      # Stage 2: Reward model (binary classifier)
+├── train_ppo.py               # Stage 3a: PPO training (--beta, --seed, --steps)
+├── train_dpo.py               # Stage 3b: DPO training (--seed)
+│
+├── evaluate.py                # C1 and C2 evaluation (--mode c1 / c2)
+├── stability_sweep.py         # C3: β × seed grid sweep (12 runs)
+├── plot_sweep.py              # Gao et al. reward-vs-KL plots
+├── alignment_tax.py           # Alignment tax analysis + optimal stopping
+├── writeup.py                 # Generates results/day9/writeup.md
+│
+├── demo.py                    # Interactive CLI demo (SFT vs PPO vs DPO)
+│
+├── checkpoints/
+│   ├── sft/                   # SFT checkpoint
+│   ├── reward_model/          # Reward model checkpoint
+│   ├── ppo/                   # PPO checkpoint (seed=42)
+│   ├── ppo_seed123/           # PPO checkpoint (seed=123)
+│   ├── ppo_seed456/           # PPO checkpoint (seed=456)
+│   ├── dpo/                   # DPO checkpoint (seed=42)
+│   ├── dpo_seed123/           # DPO checkpoint (seed=123)
+│   └── dpo_seed456/           # DPO checkpoint (seed=456)
+│
+└── results/
+    ├── c1/                    # C1 eval results + reward curve plot
+    ├── c2/                    # C2 comparison (SFT vs PPO vs DPO)
+    ├── stability_sweep/       # Sweep CSV + Gao et al. plots
+    ├── day8/                  # Alignment tax analysis outputs
+    ├── day9/                  # Final write-up (writeup.md)
+    └── day10/                 # Final demo output (demo_final.txt)
+```
+
+---
+
+## Setup
+
+**Requirements**: Python 3.9, macOS or Linux (CPU-only; MPS disabled throughout)
+
+```bash
+# Clone and enter the repo
+git clone https://github.com/i257608-cmd/rlhf-gpt2.git
+cd rlhf-gpt2
+
+# Create virtual environment
+python3.9 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install torch==2.8.0 transformers==4.57.6 trl==0.24.0 \
+            datasets accelerate pandas matplotlib
+```
+
+---
+
+## Running the Pipeline
+
+Run stages **in order**. Each stage saves to `checkpoints/` and is a prerequisite for the next.
+
+### Stage 1 — Supervised Fine-Tuning (SFT)
+```bash
+python train_sft.py
+# Output: checkpoints/sft/
+```
+
+### Stage 2 — Reward Model
+```bash
+python train_reward_model.py
+# Output: checkpoints/reward_model/
+# eval_accuracy = 85.5%, eval_loss = 0.356
+```
+
+### Stage 3a — PPO Training (3 seeds)
+```bash
+python train_ppo.py --beta 0.2 --seed 42  --steps 200
+python train_ppo.py --beta 0.2 --seed 123 --steps 200 --output_dir checkpoints/ppo_seed123
+python train_ppo.py --beta 0.2 --seed 456 --steps 200 --output_dir checkpoints/ppo_seed456
+# Output: checkpoints/ppo/, checkpoints/ppo_seed123/, checkpoints/ppo_seed456/
+```
+
+### Stage 3b — DPO Training (3 seeds)
+```bash
+python train_dpo.py --seed 42
+python train_dpo.py --seed 123 --output_dir checkpoints/dpo_seed123
+python train_dpo.py --seed 456 --output_dir checkpoints/dpo_seed456
+# Output: checkpoints/dpo/, checkpoints/dpo_seed123/, checkpoints/dpo_seed456/
+```
+
+### Evaluation
+```bash
+# C1: SFT vs PPO (reward + perplexity + alignment tax)
+python evaluate.py --mode c1
+
+# C2: SFT vs PPO vs DPO comparison
+python evaluate.py --mode c2
+```
+
+### Stability Sweep (C3 — ~20 hours CPU total)
+```bash
+python stability_sweep.py          # 12 runs: β∈{0.05,0.10,0.20,0.50} × seed∈{42,123,456}
+python plot_sweep.py               # Generate Gao et al. plots
+python alignment_tax.py            # Alignment tax + optimal stopping analysis
+```
+
+### Generate Write-Up
+```bash
+python writeup.py                  # Output: results/day9/writeup.md
+```
+
+### Interactive Demo
+```bash
+# Interactive mode
+python demo.py
+
+# Single prompt
+python demo.py --prompt "This movie was absolutely"
+
+# Run all preset prompts and save results
+python demo.py --all-prompts       # Output: results/day10/demo_final.txt
+```
+
+---
+
+## Key Results
+
+### Reward Model
+| Metric | Value |
+|---|---|
+| Evaluation Accuracy | **85.5%** |
+| Evaluation Loss | 0.356 |
+
+### C1 — PPO Training (β = 0.20, 200 steps, 3 seeds)
+| Seed | Reward Before | Reward After | Improvement | Max KL | Collapse |
+|---|---|---|---|---|---|
+| 42  | 3.578 | 5.648 | +57.9% | 14.23 | No |
+| 123 | 3.301 | 4.753 | +44.0% | 14.62 | No |
+| 456 | 3.222 | 5.457 | +69.4% | 14.62 | No |
+
+### C2 — PPO vs DPO vs SFT
+| Method | Mean Reward | Perplexity | Alignment Tax | Efficiency |
+|---|---|---|---|---|
+| SFT (baseline) | 2.498 | 37.79 | — | — |
+| PPO (β=0.20) | **4.942** | 44.69 | +18.3% | **0.1339** |
+| DPO (β=0.10) | 4.816 | 54.39 | +43.9% | 0.0528 |
+
+### C3 — KL-Penalty Stability Sweep
+| β | Mean Reward | Mean KL | Collapse Rate | Verdict |
+|---|---|---|---|---|
+| 0.05 | 9.4 | ~40 | 3/3 | **REWARD HACKING** |
+| 0.10 | 6.0 | ~18 | 3/3 | **REWARD HACKING** |
+| **0.20** | **5.3** | **9.6** | **0/3** | **✓ stable (optimal)** |
+| 0.50 | 4.2 | 4.5 | 0/3 | ✓ stable (conservative) |
+
+---
+
+## Configuration
+
+All key hyperparameters are in `config.py`:
+
+| Parameter | Value |
+|---|---|
+| Base model | `gpt2` (124M) |
+| Max sequence length | 128 tokens |
+| PPO KL penalty (β) | 0.20 |
+| DPO β | 0.10 |
+| PPO training steps | 200 |
+| Sweep β values | {0.05, 0.10, 0.20, 0.50} |
+| Sweep seeds | {42, 123, 456} |
+
+---
+
+## Report
+
+The full academic write-up (Methodology + Results + Discussion + Appendices) is at:
+```
+results/day9/writeup.md
+```
+
+Figures are in `results/c1/`, `results/stability_sweep/`, and `results/day8/`.
+
+---
+
+## References
+
+- Ouyang et al. (2022). *Training language models to follow instructions with human feedback.* NeurIPS.
+- Gao et al. (2023). *Scaling laws for reward model overoptimization.* ICML.
+- Rafailov et al. (2023). *Direct preference optimization.* NeurIPS.
+- Schulman et al. (2017). *Proximal policy optimization algorithms.* arXiv:1707.06347.
+- von Werra et al. (2022). *TRL: Transformer reinforcement learning.* GitHub.
 
 ---
 

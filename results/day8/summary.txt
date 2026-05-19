@@ -1,0 +1,33 @@
+=================================================================
+DAY 8 — ALIGNMENT TAX ANALYSIS SUMMARY
+=================================================================
+
+1. METHOD COMPARISON (PPO vs DPO vs SFT baseline)
+--------------------------------------------------
+   SFT  : reward = 2.498, perplexity = 37.79
+   PPO  : reward = 4.942, perplexity = 44.69
+          alignment tax = +18.3% ppl for +2.444 reward
+          efficiency    = 0.1339 reward / ppl%
+   DPO  : reward = 4.816, perplexity = 54.39
+          alignment tax = +43.9% ppl for +2.318 reward
+          efficiency    = 0.0528 reward / ppl%
+   >> PPO is more efficient than DPO
+
+2. OPTIMAL STOPPING KL (from stability sweep)
+--------------------------------------------------
+   Recommended β         : 0.2
+   Optimal mean KL       : 9.58
+   Collapse onset KL     : 17.69  (β=0.10 collapses here)
+   Safety margin         : 8.11 KL units
+   Gao et al. threshold  : 15.0 (our onset 17.69 is consistent)
+
+3. STABLE TRAINING CONFIGURATION (RECOMMENDATION)
+--------------------------------------------------
+   Model      : GPT-2 (124M)
+   Algorithm  : PPO with KL penalty
+   β (KL pen) : 0.20
+   Steps      : 200
+   Stop if KL : > 17.7  (early-stop criterion)
+   Expected   : reward ≈ 5.29, ppl ≈ 44.7 (+18.3% vs SFT)
+
+=================================================================

@@ -69,7 +69,9 @@ def load_rm_dataset(tokenizer, train_size: int = 4_000, eval_size: int = 400,
 def load_ppo_prompts(tokenizer, size: int = 1_000, prompt_max_len: int = 64):
     """
     Short IMDB review prefixes used as PPO rollout queries.
-    Returns a dataset with 'input_ids' (list of int) and 'query' (str).
+    Returns a dataset with only an 'input_ids' column (list of ints per item).
+    TRL 0.24 PPOTrainer expects exactly this format; DataCollatorWithPadding
+    handles batching/padding internally.
     """
     ds = load_dataset("imdb", split="test").shuffle(seed=42).select(range(size))
 
@@ -85,7 +87,7 @@ def load_ppo_prompts(tokenizer, size: int = 1_000, prompt_max_len: int = 64):
             max_length=prompt_max_len,
             padding=False,
         )
-        return {"input_ids": enc["input_ids"], "query": queries}
+        return {"input_ids": enc["input_ids"]}
 
     return ds.map(process, batched=True, remove_columns=["text", "label"])
 

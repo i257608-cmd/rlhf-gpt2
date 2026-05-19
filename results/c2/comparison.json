@@ -1,0 +1,17 @@
+{
+  "SFT (baseline)": {
+    "mean_reward": 2.497742569446564,
+    "std_reward": 1.7852162504169744,
+    "perplexity": 37.79248754187523
+  },
+  "PPO (aligned)": {
+    "mean_reward": 4.9420485496521,
+    "std_reward": 1.1506710368106756,
+    "perplexity": 44.68965052275894
+  },
+  "DPO (aligned)": {
+    "mean_reward": 4.816087937355041,
+    "std_reward": 1.1583213007376056,
+    "perplexity": 54.39416647186175
+  }
+}
